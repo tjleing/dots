@@ -61,3 +61,8 @@
 
 (package! ghostel
   :recipe (:host github :repo "dakra/ghostel"))
+
+;; Fork of cpoile/jai-ts-mode: fixes the autoload form and adds a missing
+;; (require 'compile).  Drop the fork once those land upstream.
+(package! jai-ts-mode
+  :recipe (:host github :repo "tjleing/jai-ts-mode"))
