@@ -32,8 +32,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-winter-is-coming-light)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
+(setq doom-theme 'doom-tokyo-night)
+(setq doom-font (font-spec :family "Fira Code" :size 20))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -137,3 +137,16 @@
   :config
   (claude-code-ide-emacs-tools-setup))
 (setq claude-code-ide-terminal-backend 'ghostel)
+
+;; Jai: mode and grammar come from forks (see packages.el).  The grammar
+;; fork carries a parser regenerated at ABI 14, because Debian's
+;; libtree-sitter 0.22 can't load upstream's ABI 15 parser.
+;; On a new machine: M-x treesit-install-language-grammar RET jai
+(after! treesit
+  (add-to-list 'treesit-language-source-alist
+               '(jai "https://github.com/tjleing/tree-sitter-jai")))
+
+(after! eglot
+  (add-to-list 'eglot-server-programs '(jai-ts-mode . ("jailsp"))))
+(add-hook 'jai-ts-mode-hook #'eglot-ensure)
+                                        ;(set-eglot-client! 'jai-ts-mode '("jailsp"))
